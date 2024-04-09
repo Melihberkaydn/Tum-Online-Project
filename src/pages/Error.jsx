@@ -1,5 +1,5 @@
 import { useRouteError } from "react-router-dom";
-import MainNavigation from "../components/MainNavigation";
+import MainNavigation from "../components/Main Navigation/MainNavigation";
 
 import PageContent from "../components/PageContent";
 

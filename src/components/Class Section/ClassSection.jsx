@@ -20,7 +20,10 @@ export default function ClassSection({
           {classes.map((place) => (
             <li key={place.id} className={styles["place-item"]}>
               <button onClick={() => onSelectPlace(place)}>
-                <img src={place.image.src} alt={place.image.alt} />
+                <img
+                  src={`http://localhost:3000/${place.image.src}`}
+                  alt={place.image.alt}
+                />
                 <h3>{place.title}</h3>
               </button>
             </li>

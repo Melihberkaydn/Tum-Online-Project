@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import logoImg from "../assets/LogoTUM.png";
+import logoImg from "../../assets/LogoTUM.png";
 import classes from "./MainNavigation.module.css";
 
 function MainNavigation() {
