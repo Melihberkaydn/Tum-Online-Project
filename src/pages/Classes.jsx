@@ -1,24 +1,31 @@
 import ClassSection from "../components/Class Section/ClassSection";
 import styles from "./Classes.module.css";
-import { fetchAvailableClasses, fetchUserClasses } from "../http";
-import { useState, useEffect } from "react";
+import {
+  fetchAvailableClasses,
+  fetchUserClasses,
+  updateUserClasses,
+} from "../http";
+import { useState, useEffect, useRef, useCallback } from "react";
+import Modal from "../components/Modal/Modal";
+import DeleteConfirmation from "../components/Delete Confirmation/DeleteConfirmation";
 
 export default function Classes() {
-  const selectedPlace = useRef();
+  const selectedClassRef = useRef();
   const [isFetchingAllClasses, setIsFetchingAllClasses] = useState(false);
   const [isFetchingUserClasses, setIsFetchingUserClasses] = useState(false);
   const [availableClasses, setavailableClasses] = useState([]);
   const [userClasses, setUserClasses] = useState([]);
   const [error, setError] = useState();
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [errorUpdatingClasses, setErrorUpdatingClasses] = useState();
 
   useEffect(() => {
-    async function fetchPlaces() {
+    async function fetchClasses() {
       setIsFetchingAllClasses(true);
 
       try {
-        const places = await fetchAvailableClasses();
-        setavailableClasses(places);
+        const classes = await fetchAvailableClasses();
+        setavailableClasses(classes);
         setIsFetchingAllClasses(false);
       } catch (error) {
         setError({
@@ -29,7 +36,7 @@ export default function Classes() {
       }
     }
 
-    fetchPlaces();
+    fetchClasses();
   }, []);
 
   useEffect(() => {
@@ -48,9 +55,7 @@ export default function Classes() {
     fetchClasses();
   }, []);
 
-  async function handleSelectPlace(selectedClass) {
-    // await updateUserPlaces([selectedPlace, ...userPlaces]);
-
+  async function handleSelectClass(selectedClass) {
     setUserClasses((prevPickedClasses) => {
       if (!prevPickedClasses) {
         prevPickedClasses = [];
@@ -64,22 +69,52 @@ export default function Classes() {
     });
 
     try {
-      await updateUserPlaces([selectedClass, ...userClasses]);
+      await updateUserClasses([selectedClass, ...userClasses]);
     } catch (error) {
-      setUserClasses(userPlaces);
-      setErrorUpdatingPlaces({
-        message: error.message || "Failed to update places.",
+      setUserClasses(userClasses);
+      setErrorUpdatingClasses({
+        message: error.message || "Failed to update classes.",
       });
     }
   }
 
-  function handleStartRemovePlace(place) {
+  function handleStartRemoveClass(selectedClass) {
     setModalIsOpen(true);
-    selectedPlace.current = place;
+    selectedClassRef.current = selectedClass;
   }
 
-  function handleStopRemovePlace() {
+  function handleStopRemoveClass() {
     setModalIsOpen(false);
+  }
+
+  const handleRemoveClass = useCallback(
+    async function handleRemoveClass() {
+      setUserClasses((prevUserClasses) =>
+        prevUserClasses.filter(
+          (userClass) => userClass.id !== selectedClassRef.current.id
+        )
+      );
+
+      try {
+        await updateUserClasses(
+          userClasses.filter(
+            (userClass) => userClass.id !== selectedClassRef.current.id
+          )
+        );
+      } catch (error) {
+        setUserClasses(userClasses);
+        setErrorUpdatingClasses({
+          message: error.message || "Failed to delete class.",
+        });
+      }
+
+      setModalIsOpen(false);
+    },
+    [userClasses]
+  );
+
+  function handleError() {
+    setErrorUpdatingClasses(null);
   }
 
   if (error) {
@@ -87,18 +122,27 @@ export default function Classes() {
   }
 
   return (
-    <section className={styles.placesCategory}>
-      <Modal open={modalIsOpen} onClose={handleStopRemovePlace}>
+    <section className={styles.classCategory}>
+      <Modal open={errorUpdatingClasses} onClose={handleError}>
+        {errorUpdatingClasses && (
+          <Error
+            title="An error occurred!"
+            message={errorUpdatingClasses.message}
+            onConfirm={handleError}
+          />
+        )}
+      </Modal>
+      <Modal open={modalIsOpen} onClose={handleStopRemoveClass}>
         <DeleteConfirmation
-          onCancel={handleStopRemovePlace}
-          onConfirm={handleRemovePlace}
+          onCancel={handleStopRemoveClass}
+          onConfirm={handleRemoveClass}
         />
       </Modal>
       <ClassSection
-        title="User Classes"
-        classes={availableClasses}
+        title="My Classes"
+        classes={userClasses}
         fallbackText="No class is found"
-        onSelectPlace={console.log}
+        onSelectClass={handleStartRemoveClass}
         isLoading={isFetchingUserClasses}
         loadingText="Classes are loading"
       />
@@ -106,7 +150,7 @@ export default function Classes() {
         title="All Classes"
         classes={availableClasses}
         fallbackText="No class is found"
-        onSelectPlace={console.log}
+        onSelectClass={handleSelectClass}
         isLoading={isFetchingAllClasses}
         loadingText="Classes are loading"
       />

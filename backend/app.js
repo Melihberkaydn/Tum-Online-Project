@@ -21,23 +21,23 @@ app.use((req, res, next) => {
 app.get("/classes", async (req, res) => {
   const fileContent = await fs.readFile("./data/classes.json");
 
-  const placesData = JSON.parse(fileContent);
+  const classesData = JSON.parse(fileContent);
 
-  res.status(200).json({ places: placesData });
+  res.status(200).json({ classes: classesData });
 });
 
 app.get("/user-classes", async (req, res) => {
   const fileContent = await fs.readFile("./data/user-classes.json");
 
-  const places = JSON.parse(fileContent);
+  const classes = JSON.parse(fileContent);
 
-  res.status(200).json({ places });
+  res.status(200).json({ classes });
 });
 
 app.put("/user-classes", async (req, res) => {
-  const places = req.body.places;
+  const classes = req.body.classes;
 
-  await fs.writeFile("./data/user-classes.json", JSON.stringify(places));
+  await fs.writeFile("./data/user-classes.json", JSON.stringify(classes));
 
   res.status(200).json({ message: "User classes updated!" });
 });

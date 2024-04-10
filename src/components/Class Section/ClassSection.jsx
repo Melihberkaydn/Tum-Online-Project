@@ -4,7 +4,7 @@ export default function ClassSection({
   title,
   classes,
   fallbackText,
-  onSelectPlace,
+  onSelectClass,
   isLoading,
   loadingText,
 }) {
@@ -19,7 +19,7 @@ export default function ClassSection({
         <ul className={styles.places}>
           {classes.map((place) => (
             <li key={place.id} className={styles["place-item"]}>
-              <button onClick={() => onSelectPlace(place)}>
+              <button onClick={() => onSelectClass(place)}>
                 <img
                   src={`http://localhost:3000/${place.image.src}`}
                   alt={place.image.alt}
