@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 import styles from "./ClassSection.module.css";
 
 export default function ClassSection({
   title,
-  classes,
+  givenClasses,
   fallbackText,
   onSelectClass,
   isLoading,
@@ -10,14 +11,14 @@ export default function ClassSection({
 }) {
   return (
     <>
-      <h2>{title}</h2>
+      <h2 className={styles.header}>{title}</h2>
       {isLoading && <p className={styles["fallback-text"]}>{loadingText}</p>}
-      {!isLoading && classes.length === 0 && (
+      {!isLoading && givenClasses.length === 0 && (
         <p className={styles["fallback-text"]}>{fallbackText}</p>
       )}
-      {!isLoading && classes.length > 0 && (
+      {!isLoading && givenClasses.length > 0 && (
         <ul className={styles.places}>
-          {classes.map((place) => (
+          {givenClasses.map((place) => (
             <li key={place.id} className={styles["place-item"]}>
               <button onClick={() => onSelectClass(place)}>
                 <img
