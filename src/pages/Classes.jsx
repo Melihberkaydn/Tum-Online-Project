@@ -8,6 +8,7 @@ import {
 import { useState, useEffect, useRef, useCallback } from "react";
 import Modal from "../components/Modal/Modal";
 import DeleteConfirmation from "../components/Delete Confirmation/DeleteConfirmation";
+import ErrorPage from "./Error";
 
 export default function Classes() {
   const selectedClassRef = useRef();
@@ -28,6 +29,7 @@ export default function Classes() {
         const classes = await fetchAvailableClasses();
         console.log(classes);
         setavailableClasses(classes);
+        console.log(classes);
         setIsFetchingAllClasses(false);
       } catch (error) {
         setError({
@@ -47,6 +49,7 @@ export default function Classes() {
       setIsFetchingUserClasses(true);
       try {
         const userClasses = await fetchUserClasses();
+
         setUserClasses(userClasses);
       } catch (error) {
         setError({ message: error.message || "Failed to fetch user classes." });
@@ -122,14 +125,14 @@ export default function Classes() {
   }
 
   if (error) {
-    return <Error title="An error occurred!" message={error.message} />;
+    return <ErrorPage title="An error occurred!" message={error.message} />;
   }
 
   return (
     <section className={styles.classCategory}>
       <Modal open={errorUpdatingClasses} onClose={handleError}>
         {errorUpdatingClasses && (
-          <Error
+          <ErrorPage
             title="An error occurred!"
             message={errorUpdatingClasses.message}
             onConfirm={handleError}
@@ -144,7 +147,7 @@ export default function Classes() {
       </Modal>
       <ClassSection
         title="My Classes"
-        classes={userClasses}
+        givenClasses={userClasses}
         fallbackText="No class is found"
         onSelectClass={handleStartRemoveClass}
         isLoading={isFetchingUserClasses}
@@ -152,7 +155,7 @@ export default function Classes() {
       />
       <ClassSection
         title="All Classes"
-        classes={availableClasses}
+        givenClasses={availableClasses}
         fallbackText="No class is found"
         onSelectClass={handleSelectClass}
         isLoading={isFetchingAllClasses}

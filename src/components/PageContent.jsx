@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import classes from "./PageContent.module.css";
 
 function PageContent({ title, children }) {

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useEffect } from "react";
 import styles from "./DeleteConfirmation.module.css";
 import ProgressBar from "./ProgressBar.jsx";
@@ -5,15 +6,15 @@ import ProgressBar from "./ProgressBar.jsx";
 const TIMER = 3000;
 
 export default function DeleteConfirmation({ onConfirm, onCancel }) {
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     onConfirm();
-  //   }, TIMER);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onConfirm();
+    }, TIMER);
 
-  //   return () => {
-  //     clearTimeout(timer);
-  //   };
-  // }, [onConfirm]);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [onConfirm]);
 
   return (
     <div className={styles.deleteConfirmation}>
@@ -29,7 +30,7 @@ export default function DeleteConfirmation({ onConfirm, onCancel }) {
           Yes
         </button>
       </div>
-      {/* <ProgressBar timer={TIMER} /> */}
+      <ProgressBar timer={TIMER} />
     </div>
   );
 }

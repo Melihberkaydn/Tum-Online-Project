@@ -6,7 +6,7 @@ export async function fetchAvailableClasses() {
     throw new Error("Failed to fetch classes.");
   }
 
-  return resData.places;
+  return resData.classes;
 }
 
 export async function fetchUserClasses() {
@@ -17,13 +17,13 @@ export async function fetchUserClasses() {
     throw new Error("Failed to fetch user classes");
   }
 
-  return resData.places;
+  return resData.classes;
 }
 
-export async function updateUserClasses(places) {
+export async function updateUserClasses(classes) {
   const response = await fetch("http://localhost:3000/user-classes", {
     method: "PUT",
-    body: JSON.stringify({ places }),
+    body: JSON.stringify({ classes }),
     headers: {
       "Content-Type": "application/json",
     },
