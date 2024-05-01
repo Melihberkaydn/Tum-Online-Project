@@ -19,12 +19,14 @@ export default function Classes() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [errorUpdatingClasses, setErrorUpdatingClasses] = useState();
 
+  // Fetch all classes
   useEffect(() => {
     async function fetchClasses() {
       setIsFetchingAllClasses(true);
 
       try {
         const classes = await fetchAvailableClasses();
+        console.log(classes);
         setavailableClasses(classes);
         setIsFetchingAllClasses(false);
       } catch (error) {
@@ -39,6 +41,7 @@ export default function Classes() {
     fetchClasses();
   }, []);
 
+  // Fetch user classes
   useEffect(() => {
     async function fetchClasses() {
       setIsFetchingUserClasses(true);
@@ -84,6 +87,7 @@ export default function Classes() {
   }
 
   function handleStopRemoveClass() {
+    /* Modal state change*/
     setModalIsOpen(false);
   }
 
