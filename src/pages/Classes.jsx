@@ -27,9 +27,7 @@ export default function Classes() {
 
       try {
         const classes = await fetchAvailableClasses();
-        console.log(classes);
         setavailableClasses(classes);
-        console.log(classes);
         setIsFetchingAllClasses(false);
       } catch (error) {
         setError({
@@ -44,22 +42,22 @@ export default function Classes() {
   }, []);
 
   // Fetch user classes
-  useEffect(() => {
-    async function fetchClasses() {
-      setIsFetchingUserClasses(true);
-      try {
-        const userClasses = await fetchUserClasses();
+  // useEffect(() => {
+  //   async function fetchClasses() {
+  //     setIsFetchingUserClasses(true);
+  //     try {
+  //       const userClasses = await fetchUserClasses();
 
-        setUserClasses(userClasses);
-      } catch (error) {
-        setError({ message: error.message || "Failed to fetch user classes." });
-      }
+  //       setUserClasses(userClasses);
+  //     } catch (error) {
+  //       setError({ message: error.message || "Failed to fetch user classes." });
+  //     }
 
-      setIsFetchingUserClasses(false);
-    }
+  //     setIsFetchingUserClasses(false);
+  //   }
 
-    fetchClasses();
-  }, []);
+  //   fetchClasses();
+  // }, []);
 
   async function handleSelectClass(selectedClass) {
     setUserClasses((prevPickedClasses) => {
@@ -145,14 +143,14 @@ export default function Classes() {
           onConfirm={handleRemoveClass}
         />
       </Modal>
-      <ClassSection
+      {/* <ClassSection
         title="My Classes"
         givenClasses={userClasses}
         fallbackText="No class is found"
         onSelectClass={handleStartRemoveClass}
         isLoading={isFetchingUserClasses}
         loadingText="Classes are loading"
-      />
+      /> */}
       <ClassSection
         title="All Classes"
         givenClasses={availableClasses}

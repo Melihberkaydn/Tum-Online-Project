@@ -29,12 +29,22 @@ function MainNavigation() {
           </li>
           <li>
             <NavLink
-              to="/classes"
+              to="/All-classes"
               className={({ isActive }) =>
                 isActive ? classes.active : undefined
               }
             >
-              Classes
+              All Classes
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/enrolled-classes"
+              className={({ isActive }) =>
+                isActive ? classes.active : undefined
+              }
+            >
+              Enrolled Classes
             </NavLink>
           </li>
           <li>

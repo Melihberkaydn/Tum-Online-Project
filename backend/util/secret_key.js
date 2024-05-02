@@ -1,0 +1,3 @@
+const JWT_SECRET_KEY = "a44f19ac45fbca991dd6e394f417595a2dc97efd9bb9742fec25dd4b7fdd0ea4"
+
+export default JWT_SECRET_KEY;

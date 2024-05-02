@@ -5,8 +5,8 @@ export async function fetchAvailableClasses() {
   if (!response.ok) {
     throw new Error("Failed to fetch classes.");
   }
-
-  return resData.classes;
+  //console.log(resData[0])
+  return resData;
 }
 
 export async function fetchUserClasses() {
