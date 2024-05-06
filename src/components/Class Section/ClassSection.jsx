@@ -9,9 +9,6 @@ export default function ClassSection({
   isLoading,
   loadingText,
 }) {
-
-  givenClasses.map((given_class) => console.log(given_class))
-
   return (
     <>
       <h2 className={styles.header}>{title}</h2>
@@ -23,10 +20,8 @@ export default function ClassSection({
         <ul className={styles.places}>
           {givenClasses.map((given_class) => (
             <li key={given_class.ID} className={styles["place-item"]}>
-              <button onClick={() => onSelectClass(given_class)}>
-                <img
-                  src={given_class.IMAGE_URL}                  
-                />
+              <button onClick={() => onSelectClass(given_class.ID)}>
+                <img src={given_class.IMAGE_URL} />
                 <h3>{given_class.CLASS_NAME}</h3>
               </button>
             </li>

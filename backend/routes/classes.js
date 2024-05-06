@@ -92,7 +92,7 @@ classesRoutes.get("/enrolled-classes", authenticateToken, async (req, res) => {
 
     // Query to fetch classes enrolled by the user:
     const [rows] = await db.execute(
-      `SELECT B.ID, B.CLASS_NAME
+      `SELECT B.ID, B.CLASS_NAME, B.STUDENT_ENROLLED, B.IMAGE_URL
       FROM tumonline.enrollments AS A
       JOIN tumonline.available_classes as B ON A.class_id = B.ID
       WHERE A.user_id = ?`,

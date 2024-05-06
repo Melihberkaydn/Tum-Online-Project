@@ -1,3 +1,5 @@
+import { getAuthToken } from "./util/auth";
+
 export async function fetchAvailableClasses() {
   const response = await fetch("http://localhost:3000/classes");
   const resData = await response.json();
@@ -20,12 +22,15 @@ export async function fetchUserClasses() {
   return resData.classes;
 }
 
-export async function updateUserClasses(classes) {
-  const response = await fetch("http://localhost:3000/user-classes", {
-    method: "PUT",
-    body: JSON.stringify({ classes }),
+export async function addUserClass(classId) {
+  const token = getAuthToken();
+  console.log(token)
+  const response = await fetch("http://localhost:3000/enroll", {
+    method: "POST",
+    body: JSON.stringify({ "classId": classId }),
     headers: {
       "Content-Type": "application/json",
+      "Authorization": "Bearer " + token,
     },
   });
 

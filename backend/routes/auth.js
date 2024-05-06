@@ -69,7 +69,7 @@ authRoutes.post("/login", async (req, res) => {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    console.log("User Logged In: ", user)
+    console.log("User Logged In: ", user);
 
     const token = jwt.sign({ id: user.userid, role: user.role }, secretKey, {
       expiresIn: "1h",
@@ -81,7 +81,6 @@ authRoutes.post("/login", async (req, res) => {
     res.status(500).json({ error: "An error occurred during login" });
   }
 });
-
 
 export function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
@@ -95,7 +94,7 @@ export function authenticateToken(req, res, next) {
     if (err) {
       return res.status(403).json({ error: "Invalid token" });
     }
-    
+
     req.user = user; // Save user info for later use.
     console.log("Authenticated. Decoded Token: ", req.user);
     next();

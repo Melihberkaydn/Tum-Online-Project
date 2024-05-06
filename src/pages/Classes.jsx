@@ -1,10 +1,9 @@
 import ClassSection from "../components/Class Section/ClassSection";
 import styles from "./Classes.module.css";
 import {
+  addUserClass,
   fetchAvailableClasses,
-  fetchUserClasses,
-  updateUserClasses,
-} from "../http";
+  } from "../http";
 import { useState, useEffect, useRef, useCallback } from "react";
 import Modal from "../components/Modal/Modal";
 import DeleteConfirmation from "../components/Delete Confirmation/DeleteConfirmation";
@@ -13,7 +12,7 @@ import ErrorPage from "./Error";
 export default function Classes() {
   const selectedClassRef = useRef();
   const [isFetchingAllClasses, setIsFetchingAllClasses] = useState(false);
-  const [isFetchingUserClasses, setIsFetchingUserClasses] = useState(false);
+  //const [isFetchingUserClasses, setIsFetchingUserClasses] = useState(false);
   const [availableClasses, setavailableClasses] = useState([]);
   const [userClasses, setUserClasses] = useState([]);
   const [error, setError] = useState();
@@ -59,23 +58,24 @@ export default function Classes() {
   //   fetchClasses();
   // }, []);
 
-  async function handleSelectClass(selectedClass) {
-    setUserClasses((prevPickedClasses) => {
-      if (!prevPickedClasses) {
-        prevPickedClasses = [];
-      }
-      if (
-        prevPickedClasses.some((lecture) => lecture.id === selectedClass.id)
-      ) {
-        return prevPickedClasses;
-      }
-      return [selectedClass, ...prevPickedClasses];
-    });
-
+  async function handleSelectClass(classId) {
+    // setUserClasses((prevPickedClasses) => {
+    //   if (!prevPickedClasses) {
+    //     prevPickedClasses = [];
+    //   }
+    //   if (
+    //     prevPickedClasses.some((lecture) => lecture.id === selectedClass.id)
+    //   ) {
+    //     return prevPickedClasses;
+    //   }
+    //   return [selectedClass, ...prevPickedClasses];
+    // });
+    console.log("handle select class");
     try {
-      await updateUserClasses([selectedClass, ...userClasses]);
+      console.log(classId);
+      await addUserClass(classId);
     } catch (error) {
-      setUserClasses(userClasses);
+      //setUserClasses(userClasses);
       setErrorUpdatingClasses({
         message: error.message || "Failed to update classes.",
       });
@@ -143,14 +143,6 @@ export default function Classes() {
           onConfirm={handleRemoveClass}
         />
       </Modal>
-      {/* <ClassSection
-        title="My Classes"
-        givenClasses={userClasses}
-        fallbackText="No class is found"
-        onSelectClass={handleStartRemoveClass}
-        isLoading={isFetchingUserClasses}
-        loadingText="Classes are loading"
-      /> */}
       <ClassSection
         title="All Classes"
         givenClasses={availableClasses}
