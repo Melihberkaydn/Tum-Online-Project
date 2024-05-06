@@ -1,8 +1,7 @@
-# React + Vite
+# TumOnline Fullstack application with LLM microservice
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Developed a comprehensive online university system enabling student enrollment and interactive commenting, utilizing React.js for frontend development (currently in progress) and Node.js for backend operations.
 
-Currently, two official plugins are available:
+Implemented a robust authentication system supporting multiple users and managed data storage with a MySQL database server.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Engineered a Flask microservice employing OpenAI's GPT-3.5 Turbo for analyzing comments to extract sentiment scores and keywords, enhancing the system's backend functionality.
