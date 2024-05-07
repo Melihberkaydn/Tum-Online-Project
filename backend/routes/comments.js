@@ -28,13 +28,13 @@ commentsRoutes.get("/get-comments", authenticateToken, async (req, res) => {
 
 commentsRoutes.post("/add-comment", authenticateToken, async (req, res) => {
   const { classId, comment, time } = req.body;
-  const userId = req.user.userId; // Assuming authenticateToken middleware adds userId to req.user
+  const userId = req.user.userId;
 
   if (!classId || !comment || !time) {
     return res.status(400).json({ error: "All fields are required" });
   }
 
-  // Call your microservice to analyze the comment
+  // Call microservice
   try {
     const analysisResult = await analyzeComment(comment);
     const { keywords, sentiment } = analysisResult;
